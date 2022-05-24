@@ -1,44 +1,25 @@
-let posts = require("../db/users.json"); // import json
+const user = require("../db/users.json"); // import json
 
-function get(req, res) {
-  res.status(200).json(posts);
-}
-
-function getById(req, res) {
-  const data = posts.find((item) => {
-    return item.id == req.params.id;
-  });
-  if (data == -1) {
-    res.status(404).json({ message: "User tidak terdaftar!" });
-  }
-  res.status(200).json(data);
-}
-
-function index(req, res) {
+function loginController(req, res) {
+  res.status(200);
   res.render("login");
 }
 
-function login(req, res) {
+function loginProcessController(req, res) {
   const email = req.body.email;
   const password = req.body.password;
-  const data = posts.find((item) => {
-    return item.id == req.params.id;
-  });
 
-  if (data == -1) {
-    res.status(403).json({ message: "Username tidak ada!" });
+  const emailData = user[0].email;
+  const passData = user[0].password;
+
+  if (email == emailData && password == passData) {
+    res.json({ message: "login berhasil" });
   } else {
-    if (posts[data].password != password) {
-      res.status(403).json({ message: "Password salah!" });
-    } else {
-      res.status(200).json({ message: "Login berhasil!" });
-    }
+    res.json({ message: "email tidak terdaftar" });
   }
 }
 
 module.exports = {
-  get,
-  getById,
-  index,
-  login,
+  loginController,
+  loginProcessController,
 };

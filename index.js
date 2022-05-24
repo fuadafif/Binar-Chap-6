@@ -1,7 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const app = express(); // inisiasi express
+const route = require("./route");
 const port = process.env.PORT; // konfigurasi port
+
+// baca data users
+const users = require("./db/users.json");
 
 // jlnkan server express
 app.listen(port, (start) => {
@@ -15,15 +19,5 @@ app.use(express.static("public"));
 app.use(express.json()); // middleware pembaca body, diletakkan seblm route
 app.use(express.urlencoded({ extended: false }));
 
-// konfigurasi controller
-const indexController = require("./controller/index");
-const playController = require("./controller/play");
-const userController = require("./controller/login");
-
-// terapkan route
-app.get("/", indexController.index);
-app.get("/play", playController.index);
-app.get("/users", userController.get);
-app.get("/users/:id", userController.getById);
-app.get("/login", userController.index);
-app.post("/login", userController.login);
+// routing
+app.use("/", route);

@@ -1,7 +1,8 @@
-function index(req, res) {
+function playController(req, res) {
+  res.status(200);
   res.render("play");
 }
 
 module.exports = {
-  index,
+  playController,
 };

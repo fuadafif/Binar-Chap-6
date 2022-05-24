@@ -1,7 +1,7 @@
-function index(req, res) {
+function indexController(req, res) {
   res.render("index");
 }
 
 module.exports = {
-  index,
+  indexController,
 };
